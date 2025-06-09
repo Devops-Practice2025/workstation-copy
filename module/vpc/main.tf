@@ -7,12 +7,12 @@ resource "aws_vpc" "my_vpc" {
   }
 }
 
-resource "aws_subnet" "public" {
+resource "aws_subnet" "my_subnet" {
    vpc_id = aws_vpc.my_vpc.id
  cidr_block = "10.0.1.0/24"
  map_public_ip_on_launch = true
  tags = {
- Name = "public-subnet"
+ Name = "my_subnet"
  }
 }
 
@@ -38,12 +38,12 @@ resource "aws_route_table" "public" {
 
 # Route Table Association
 resource "aws_route_table_association" "a" {
- subnet_id = aws_subnet.public.id
+ subnet_id = aws_subnet.my_subnet.id
  route_table_id = aws_route_table.public.id
 }
 
-resource "aws_security_group" "open_all" {
-  name        = "open-all-ports"
+resource "aws_security_group" "my_sg" {
+  name        = "my_sg"
   description = "Security group with all ports open"
   vpc_id      = aws_vpc.my_vpc.id
 
@@ -62,6 +62,6 @@ resource "aws_security_group" "open_all" {
   }
 
   tags = {
-    Name = "open-all-ports"
+    Name = "my_sg"
   }
 }

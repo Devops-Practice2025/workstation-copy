@@ -2,7 +2,11 @@ resource "aws_instance" "workstation" {
   ami = data.aws_ami.workstation-ami.image_id
   instance_type = var.instance_type
 
-  tags = {
+   subnet_id = data.terraform_remote_state.vpc.outputs.subnet_id.id
+   vpc_security_group_ids = data.terraform_remote_state.vpc.outputs.sg_id.id
+
+
+tags = {
     Name = var.instance_name
   }
 }
