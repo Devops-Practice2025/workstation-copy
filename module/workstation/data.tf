@@ -6,7 +6,7 @@ data "aws_ami" "workstation-ami" {
 }
 
 data "terraform_remote_state" "vpc"  {
-  backend ="s3"
+  backend = "s3"
 config = {
     bucket = "my-terraform-state-bucket"
     key = "vpc/terraform.tfstate"
