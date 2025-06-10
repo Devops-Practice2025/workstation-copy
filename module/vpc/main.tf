@@ -25,7 +25,7 @@ resource "aws_internet_gateway" "gw" {
 }
 
 # Route Table
-resource "aws_route_table" "public" {
+resource "aws_route_table" "my_subnet" {
  vpc_id = aws_vpc.my_vpc.id
  route {
  cidr_block = "0.0.0.0/0"
@@ -39,7 +39,7 @@ resource "aws_route_table" "public" {
 # Route Table Association
 resource "aws_route_table_association" "a" {
  subnet_id = aws_subnet.my_subnet.id
- route_table_id = aws_route_table.public.id
+ route_table_id = aws_route_table.my_subnet.id
 }
 
 resource "aws_security_group" "my_sg" {
