@@ -2,4 +2,4 @@
 
 Login to AWS CLI\
 aws configure\
-aws s3api create-bucket --bucket my-state-karthi-buket --region us-east-1
+aws s3api create-bucket --bucket karthi-bucket2025 --region us-east-1
