@@ -17,6 +17,6 @@ module "workstation" {
 
 module "s3" {
   source = "./module/s3"
-  bucket = "my-karthi-buket"
+  bucket = "karthi-bucket2025"
   environment = "DEV"  
 }
