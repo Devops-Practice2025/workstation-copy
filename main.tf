@@ -10,8 +10,8 @@ module "vpc" {
 module "workstation" {  
   for_each = var.tools
   source = "./module/workstation"
-  instance_name = each.key[instance_name]
-  instance_type = each.key[instance_type]
+  instance_name = each.key
+  instance_type = each.value[instance_type]
   subnet_id = module.vpc.subnet_id
   sg_id = module.vpc.sg_id
 }
