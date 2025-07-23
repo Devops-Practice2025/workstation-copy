@@ -15,9 +15,3 @@ module "workstation" {
   subnet_id = module.vpc.subnet_id
   sg_id = module.vpc.sg_id
 }
-
-module "s3" {
-  source = "./module/s3"
-  bucket = "karthi-bucket2025"
-  environment = "DEV"  
-}
