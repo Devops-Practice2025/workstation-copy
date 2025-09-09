@@ -16,4 +16,5 @@ resource "aws_instance" "workstation" {
   tags = {
     Name = var.instance_name
   }
-}
+} 
+
