@@ -24,4 +24,4 @@ sudo kubectl version
 sudo yum install -y yum-utils shadow-utils
 sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
 sudo dnf install terraform
-
+sudo rm -rf kubectl kubectl.sha256
