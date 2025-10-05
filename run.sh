@@ -1,5 +1,5 @@
 #docker
----
+
 sudo dnf update -y
 sudo dnf -y install dnf-plugins-core
 sudo dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
@@ -10,7 +10,7 @@ sudo docker run hello-world
 sudo usermod -aG docker ec2-user
 sudo docker run hello-world
 docker --version
----
+
 
 #kubectl run as root
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
