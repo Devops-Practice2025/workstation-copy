@@ -30,6 +30,6 @@
     state: file
 
 - name: Verify Terraform installation
-  command: terraform version
-  register: terraform_version
+  ansible.builtin.shell: |
+    terraform -version
 
