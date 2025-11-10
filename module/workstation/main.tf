@@ -60,7 +60,7 @@ resource "null_resource" "run_ansible_playbook" {
       type     = "ssh"
       user     = "ec2-user"               # or "ubuntu"
       password = "DevOps321"          # ⚠️ Not secure
-      host     = self.public_ip
+      host     = aws_instance.workstation.public_ip
     }
   }
 
