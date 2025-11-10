@@ -5,7 +5,7 @@ aws configure\
 aws s3api create-bucket --bucket karthi-bucket2025 --region us-east-1
 
 sudo dnf install ansible
-ansible-playbook -i localhost -e username=ec2-user password=DevOps321 main.yaml
+ansible-playbook -i localhost, -e ansible_user=ec2-user -e ansible_password=DevOps321 main.yml
 ```
 fdisk /dev/xvda \
 pvcreate /dev/xvda5 \
