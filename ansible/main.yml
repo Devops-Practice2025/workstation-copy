@@ -1,5 +1,6 @@
-host : all
-become: true
-gather_facts: true
-roles:
-  - common
+- name : Ansible playbook
+  host : all
+  become: true
+  gather_facts: true
+  roles:
+    - common
