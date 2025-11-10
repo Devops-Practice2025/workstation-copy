@@ -5,7 +5,7 @@
     update_cache: yes
 
 - name: Install required packages
-  apt:
+  dnf:
     name:
       - wget
       - unzip
