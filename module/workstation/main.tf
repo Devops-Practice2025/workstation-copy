@@ -51,7 +51,7 @@ resource "null_resource" "run_ansible_playbook" {
   provisioner "remote-exec" {
     inline = [
       "echo Hello from Terraform!",
-      "sudo dnf install ansible",
+      "sudo dnf install ansible -y",
       "git clone https://github.com/Devops-Practice2025/workstation-copy.git",
       "cd ~/workstation-copy/ansible",
       "ansible-playbook -i localhost, -e ansible_user=ec2-user -e ansible_password=DevOps321 main.yml -v"
