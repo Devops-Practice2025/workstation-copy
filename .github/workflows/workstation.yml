@@ -1,9 +1,23 @@
 name: Workstation Terraform AWS Deploy
 on: [workflow_dispatch]
+  #  inputs:
+  #   bucket_name:
+  #     description: "Globally unique bucket name"
+  #     required: true
+  #     default: "karthi-bucket2025"
+  #   aws_region:
+  #     description: "AWS region (omit create-bucket-configuration for us-east-1)"
+  #     required: true
+  #     default: "us-east-1"
+
 jobs:
   Workstation-Job:
     name: Terraform apply
     runs-on: ubuntu-latest
+    env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ github.event.inputs.aws_region }}
 
     steps:
       - name: Code checkout
@@ -18,6 +32,15 @@ jobs:
           aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
           aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           aws-region: ${{secrets.AWS_REGION}}
+      - name: Install aws-cli
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install aws-cli -y
+          aws --version
+      - name: create S3 bucket
+        run: |
+          aws s3api create-bucket --bucket karthi-bucket2025 --region us-east-1
+
 
       - name: Terraform Init
         run: terraform init -backend-config=env/state.tfvars
