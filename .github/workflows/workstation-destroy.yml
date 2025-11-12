@@ -1,4 +1,4 @@
-name: Workstation Terraform AWS Deploy
+name: Destroy Workstation
 on: [workflow_dispatch]
 jobs:
   Workstation-destroy-Job:
