@@ -29,7 +29,4 @@
     mode: '0755'
     state: file
 
-- name: Verify Terraform installation
-  ansible.builtin.shell: |
-    terraform -version
 
