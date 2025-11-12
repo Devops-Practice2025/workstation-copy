@@ -45,7 +45,7 @@ resource "null_resource" "run_ansible_playbook" {
   depends_on = [
     aws_instance.workstation,
     aws_iam_role_policy_attachment.ec2_policy_attachment,
-    ec2_instance_profile  # Replace with your actual resource name
+     # Replace with your actual resource name
   ]
 
   provisioner "remote-exec" {
