@@ -23,9 +23,9 @@ jobs:
         run: terraform init -backend-config=env/state.tfvars
   
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform plan 
   
       - name: Terraform Apply
-        run: terraform apply -input=false -auto-approve tfplan
+        run: terraform apply --auto-approve 
 
 
