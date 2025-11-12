@@ -9,7 +9,6 @@
     name:
       - wget
       - unzip
-      - ansible
     state: present
     update_cache: yes
 
