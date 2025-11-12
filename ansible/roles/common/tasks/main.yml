@@ -12,6 +12,12 @@
     state: present
     update_cache: yes
 
+- name: Lvextend lvm size
+  ansible.builtin.shell : |
+    growpart /dev/xvda 4
+    lvextend -L 20G /dev/RootVG/homeVol
+    xfs_growfs /home
+
 - name: Download Terraform
   get_url:
     url: https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip

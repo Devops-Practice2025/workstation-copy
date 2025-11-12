@@ -12,4 +12,11 @@ pvcreate /dev/xvda5 \
 vgextend RootVg /dev/xvda5 \
 lvextend -L +10G /dev/RootVg/rootVol \
 xfs_growfs /dev/RootVG/rootVol
+
+---
+`````
+sudo growpart /dev/xvda 4
+sudo partprobe /dev/xvda
+sudo lvextend -L 28G /dev/RootVG/homeVol
+``````
 ```
