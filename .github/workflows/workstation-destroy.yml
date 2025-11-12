@@ -5,7 +5,7 @@ jobs:
         name: Terraform destroy
         runs-on: ubuntu-latest
 
-        environment: qa
+        
         steps:
         - name: Code checkout
           uses: actions/checkout@v3
