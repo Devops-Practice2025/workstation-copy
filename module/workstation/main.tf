@@ -12,7 +12,7 @@ resource "aws_instance" "workstation" {
 
   }
   tags = {
-    Name = var.instance_name
+    Name = var.name
   }
 } 
 
@@ -31,17 +31,50 @@ resource "aws_iam_role" "ec2_role" {
     }]
   })
 }
-resource "aws_iam_role_policy_attachment" "ec2_policy_attachment" {
-  role       = aws_iam_role.ec2_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess" # Example policy
+resource "aws_iam_role_policy_attachment" "policy-attach" {
+  count      = length(var.policy_name)
+  role       = aws_iam_role.role.name
+  policy_arn = "arn:aws:iam::aws:policy/${var.policy_name[count.index]}"
 }
+
 resource "aws_iam_instance_profile" "ec2_instance_profile" {
   name = "ec2-instance-profile"
   role = aws_iam_role.ec2_role.name
 }
 
+resource "aws_route53_zone" "public" {
+  
+  name = var.domain_name
+
+  comment = "Public hosted zone for ${var.domain_name}"
+  force_destroy = false
+
+  tags =  {
+    Name = "public-${var.domain_name}"
+  }
+  }
+
+
+resource "aws_route53_record" "record-public" {
+  zone_id = aws_route53_zone.public.zone_id
+  name    = var.name
+  type    = "A"
+  ttl     = 10
+  records = [aws_instance.tool.public_ip]
+}
+
+resource "aws_route53_record" "record-private" {
+  zone_id = aws_route53_zone.public.zone_id
+  name    = "${var.name}-internal"
+  type    = "A"
+  ttl     = 10
+  records = [aws_instance.tool.private_ip]
+}
+
+
 
 resource "null_resource" "run_ansible_playbook" {
+  count = var.name == "workstation" ? 1:0
   depends_on = [
     aws_instance.workstation,
     aws_iam_role_policy_attachment.ec2_policy_attachment,
