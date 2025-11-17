@@ -31,6 +31,12 @@ resource "aws_iam_role" "ec2_role" {
       Action = "sts:AssumeRole"
     }]
   })
+  
+lifecycle {
+    prevent_destroy = true
+    ignore_changes  = [name]
+  }
+
 }
 resource "aws_iam_role_policy_attachment" "policy-attach" {
   count      = length(var.policy_name)
