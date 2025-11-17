@@ -18,7 +18,7 @@ resource "aws_instance" "tool" {
 
 
 resource "aws_iam_role" "ec2_role" {
-  name  = "ec2-managed-role"
+  name  = var.role
 
 
   assume_role_policy = jsonencode({

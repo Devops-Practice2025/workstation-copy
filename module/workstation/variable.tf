@@ -7,3 +7,6 @@ variable "domain_name" {
 variable "policy_name" {
   
 }
+variable "role" {
+  
+}
