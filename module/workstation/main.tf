@@ -35,13 +35,13 @@ count = length(data.aws_iam_role.existing.*.name) == 0 ? 1 : 0
 }
 resource "aws_iam_role_policy_attachment" "policy-attach" {
   count      = length(var.policy_name)
-  role       = aws_iam_role.ec2_role.name
+  role       = aws_iam_role.ec2_role[count.index]
   policy_arn = "arn:aws:iam::aws:policy/${var.policy_name[count.index]}"
 }
 
 resource "aws_iam_instance_profile" "ec2_instance_profile" {
   name = "ec2-instance-profile"
-  role = aws_iam_role.ec2_role.name
+  role = aws_iam_role.ec2_role[count.index]
 }
 
 resource "aws_route53_zone" "public" {
