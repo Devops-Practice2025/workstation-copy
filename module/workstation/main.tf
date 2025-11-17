@@ -77,7 +77,7 @@ resource "null_resource" "run_ansible_playbook" {
   count = var.name == "workstation" ? 1:0
   depends_on = [
     aws_instance.tool,
-    aws_iam_role_policy_attachment.ec2_policy_attachment,
+    aws_iam_role_policy_attachment.policy-attach,
      # Replace with your actual resource name
   ]
 
