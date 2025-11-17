@@ -76,7 +76,7 @@ resource "aws_route53_record" "record-private" {
 resource "null_resource" "run_ansible_playbook" {
   count = var.name == "workstation" ? 1:0
   depends_on = [
-    aws_instance.workstation,
+    aws_instance.tool,
     aws_iam_role_policy_attachment.ec2_policy_attachment,
      # Replace with your actual resource name
   ]
