@@ -18,7 +18,6 @@ resource "aws_instance" "tool" {
 
 
 resource "aws_iam_role" "ec2_role" {
-count = data.aws_iam_role.existing.*.name == "ec2-managed-role" ? 1 : 0
   name  = "ec2-managed-role"
 
 
