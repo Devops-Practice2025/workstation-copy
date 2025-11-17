@@ -10,3 +10,6 @@ variable "policy_name" {
 variable "role" {
   
 }
+variable "profile" {
+  
+}

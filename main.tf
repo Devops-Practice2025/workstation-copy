@@ -17,5 +17,6 @@ module "workstation" {
   policy_name = each.value["policy_name"]
   domain_name = var.domain_name
   role = each.value["role"]
+  profile = each.value["profile"]
 }
 
