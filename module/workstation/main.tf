@@ -1,4 +1,4 @@
-resource "aws_instance" "workstation" {
+resource "aws_instance" "tool" {
   ami = data.aws_ami.workstation-ami.image_id
   instance_type = var.instance_type
 
@@ -33,7 +33,7 @@ resource "aws_iam_role" "ec2_role" {
 }
 resource "aws_iam_role_policy_attachment" "policy-attach" {
   count      = length(var.policy_name)
-  role       = aws_iam_role.role.name
+  role       = aws_iam_role.ec2_role.name
   policy_arn = "arn:aws:iam::aws:policy/${var.policy_name[count.index]}"
 }
 
@@ -94,7 +94,7 @@ resource "null_resource" "run_ansible_playbook" {
       type     = "ssh"
       user     = "ec2-user"               # or "ubuntu"
       password = "DevOps321"          # ⚠️ Not secure
-      host     = aws_instance.workstation.public_ip
+      host     = aws_instance.tool.public_ip
     }
   }
 
