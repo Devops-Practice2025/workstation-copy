@@ -18,7 +18,9 @@ resource "aws_instance" "tool" {
 
 
 resource "aws_iam_role" "ec2_role" {
-  name = "ec2-managed-role"
+count = length(data.aws_iam_role.existing.*.name) == 0 ? 1 : 0
+  name  = "ec2-managed-role"
+
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
