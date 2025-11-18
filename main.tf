@@ -21,7 +21,7 @@ module "workstation" {
 }
 
 module "route53" {
-  source = "/module/route53"
+  source = "./module/route53"
   for_each = var.tools
   domain_name = var.domain_name
   name = each.key
