@@ -33,7 +33,7 @@ resource "aws_iam_role" "ec2_role" {
   })
   
 lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
     ignore_changes  = [name]
   }
 
