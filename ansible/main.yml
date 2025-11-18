@@ -4,3 +4,10 @@
   gather_facts: true
   roles:
     - "{{ role_name }}"
+  
+  vars:
+    vault_user: vault
+    vault_config_dir: /etc/vault.d
+    vault_config_file: /etc/vault.d/vault.hcl
+    vault_service_file: /etc/systemd/system/vault.service
+    vault_repo_url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
