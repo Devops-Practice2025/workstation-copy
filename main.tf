@@ -18,10 +18,12 @@ module "workstation" {
   domain_name = var.domain_name
   role = each.value["role"]
   profile = each.value["profile"]
+  zone_id = module.route53.zone_id
 }
 
 module "route53" {
   source = "./module/route53"
   domain_name = var.domain_name
+  
 
 }

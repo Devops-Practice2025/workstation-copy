@@ -13,3 +13,6 @@ variable "role" {
 variable "profile" {
   
 }
+variable "zone_id" {
+  
+}
