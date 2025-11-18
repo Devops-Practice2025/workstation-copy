@@ -94,7 +94,35 @@ resource "null_resource" "run_ansible_playbook" {
       "sudo dnf install ansible -y",
       "git clone https://github.com/Devops-Practice2025/workstation-copy.git",
       "cd ~/workstation-copy/ansible",
-      "ansible-playbook -i localhost, -e ansible_user=ec2-user -e ansible_password=DevOps321 main.yml -v"
+      "ansible-playbook -i localhost, -e ansible_user=ec2-user -e ansible_password=DevOps321 -e role_name=workstation main.yml "
+    ]
+
+    connection {
+      type     = "ssh"
+      user     = "ec2-user"               # or "ubuntu"
+      password = "DevOps321"          # ⚠️ Not secure
+      host     = aws_instance.tool.public_ip
+    }
+  }
+
+
+  }
+
+  resource "null_resource" "run_vault_playbook" {
+  count = var.name == "vault" ? 1:0
+  depends_on = [
+    aws_instance.tool,
+    aws_iam_role_policy_attachment.policy-attach,
+     # Replace with your actual resource name
+  ]
+
+  provisioner "remote-exec" {
+    inline = [
+      "echo Hello from ansible vault!",
+      "sudo dnf install ansible -y",
+      "git clone https://github.com/Devops-Practice2025/workstation-copy.git",
+      "cd ~/workstation-copy/ansible",
+      "ansible-playbook -i localhost, -e ansible_user=ec2-user -e ansible_password=DevOps321 -e role_name=vault main.yml -v"
     ]
 
     connection {

@@ -1,0 +1,18 @@
+- name : Install hasicorp vault
+  dnf :
+    name : '*'
+    state: latest
+    update_cache: yes
+
+- name : Install hasicorp vault
+  dnf :
+    name : 'vault'
+    state: present
+    update_cache: yes
+
+- name: Lvextend lvm size
+  ansible.builtin.shell : |
+    growpart /dev/xvda 4
+    lvextend -L 20G /dev/RootVG/homeVol
+    xfs_growfs /home
+
