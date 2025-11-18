@@ -22,7 +22,7 @@
     state: present
 
 - name: Add HashiCorp repository
-  command: yum-config-manager --add-repo "{{ vault_repo_url }}"
+  command: yum-config-manager --add-repo {{ vault_repo_url }}
   args:
       creates: /etc/yum.repos.d/hashicorp.repo
 
