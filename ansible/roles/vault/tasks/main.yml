@@ -1,13 +1,8 @@
+
 - name : Install hasicorp vault
   dnf :
     name : '*'
     state: latest
-    update_cache: yes
-
-- name : Install hasicorp vault
-  dnf :
-    name : 'vault'
-    state: present
     update_cache: yes
 
 - name: Lvextend lvm size
@@ -15,4 +10,102 @@
     growpart /dev/xvda 4
     lvextend -L 20G /dev/RootVG/homeVol
     xfs_growfs /home
+
+  vars:
+    vault_user: vault
+    vault_config_dir: /etc/vault.d
+    vault_config_file: /etc/vault.d/vault.hcl
+    vault_service_file: /etc/systemd/system/vault.service
+    vault_repo_url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+
+
+
+
+- name: Install yum-utils
+  yum:
+    name: yum-utils
+    state: present
+
+- name: Add HashiCorp repository
+  command: yum-config-manager --add-repo "{{ vault_repo_url }}"
+  args:
+      creates: /etc/yum.repos.d/hashicorp.repo
+
+
+
+- name : Install hasicorp vault
+  dnf :
+    name : 'vault'
+    state: present
+    update_cache: yes
+
+
+
+- name: Create Vault user
+  user:
+    name: "{{ vault_user }}"
+    system: yes
+    shell: /bin/false
+    home: "{{ vault_config_dir }}"
+    
+- name: Create Vault configuration directory
+  file:
+    path: "{{ vault_config_dir }}"
+    state: directory
+    owner: "{{ vault_user }}"
+    group: "{{ vault_user }}"
+    mode: '0750'
+
+
+- name: Create Vault configuration file
+  copy:
+      dest: "{{ vault_config_file }}"
+      content: |
+        storage "file" {
+          path = "/opt/vault/data"
+        }
+
+        listener "tcp" {
+          address     = "0.0.0.0:8200"
+          tls_disable = 1
+        }
+
+        ui = true
+      owner: "{{ vault_user }}"
+      group: "{{ vault_user }}"
+      mode: '0640'
+
+- name: Create Vault systemd service file
+  copy:
+    dest: "{{ vault_service_file }}"
+    content: |
+      [Unit]
+      Description="HashiCorp Vault"
+      Documentation=https://developer.hashicorp.com/vault/docs
+      ConditionFileNotEmpty={{ vault_config_file }}
+
+      [Service]
+      User={{ vault_user }}
+      Group={{ vault_user }}
+      ExecStart=/usr/bin/vault server -config={{ vault_config_file }}
+      ExecReload=/bin/kill --signal HUP $MAINPID
+      Restart=on-failure
+      KillMode=process
+      LimitNOFILE=65536
+
+      [Install]
+      WantedBy=multi-user.target
+    mode: '0644'
+
+- name: Reload systemd daemon
+  command: systemctl daemon-reload
+
+- name: Enable and start Vault service
+  systemd:
+    name: vault
+    enabled: yes
+    state: started
+
+
+
 
