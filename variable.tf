@@ -17,5 +17,5 @@ variable "tools" {
   }
 }
 variable "domain_name" {
-  default = "karthi.online"
+  default = "my.private"
 }
