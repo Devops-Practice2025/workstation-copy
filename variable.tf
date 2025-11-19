@@ -17,5 +17,5 @@ variable "tools" {
   }
 }
 variable "domain_name" {
-  default = "my.private"
+  default = "domain.private"
 }
