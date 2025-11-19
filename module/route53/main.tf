@@ -1,4 +1,4 @@
-resource "aws_route53_zone" "private" {
+resource "aws_route53_zone" "private_zone" {
   
   name = var.domain_name
 
