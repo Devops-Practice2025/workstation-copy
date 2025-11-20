@@ -12,6 +12,12 @@
     state: latest
     update_cache: yes
 
+- name: Lvextend lvm size
+  ansible.builtin.shell : |
+    growpart /dev/xvda 4
+    lvextend -L 20G /dev/RootVG/homeVol
+    xfs_growfs /home
+
 - name: Install required packages
   dnf:
     name:
