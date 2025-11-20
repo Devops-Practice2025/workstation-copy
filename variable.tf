@@ -13,6 +13,13 @@ variable "tools" {
       profile = "vault-profile"
       
     }
+            github-runner = {
+      instance_type = "t2.large"
+      role = "grunner-role"
+      policy_name = ["AdministratorAccess"]
+      profile = "gunner-profile"
+      
+    }
 
   }
 }
