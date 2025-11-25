@@ -24,5 +24,5 @@ variable "tools" {
   }
 }
 variable "domain_name" {
-  default = "domain.private"
+  default = "devops.local"
 }
