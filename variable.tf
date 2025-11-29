@@ -4,7 +4,7 @@ variable "tools" {
       instance_type = "t2.large"
 
           }
-          vault{
+          vault={
             instance_type = "t3.medium"
           }
 
