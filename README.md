@@ -20,3 +20,15 @@ sudo partprobe /dev/xvda
 sudo lvextend -L 28G /dev/RootVG/homeVol
 ``````
 ```
+aws iam remove-role-from-instance-profile --instance-profile-name vault-profile --role-name vault-role
+aws iam remove-role-from-instance-profile --instance-profile-name ec2-profile --role-name ec2-role
+aws iam remove-role-from-instance-profile --instance-profile-name grunner-profile --role-name grunner-role
+aws iam detach-role-policy --role-name grunner-role  --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
+aws iam detach-role-policy --role-name ec2-role  --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
+aws iam detach-role-policy --role-name vault-role  --policy-arn arn:aws:iam::aws:policy/AdministratorAcces
+
+aws iam delete-role --role-name grunner-role
+aws iam delete-role --role-name ec2-role
+aws iam delete-role --role-name vault-role
+
+````
