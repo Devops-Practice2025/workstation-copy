@@ -7,7 +7,9 @@ variable "tools" {
           vault={
             instance_type = "t3.medium"
           }
-
+          grunner={
+            instance_type = "t3.medium"
+          }
 
   }
 }
