@@ -24,5 +24,5 @@ variable "tools" {
   }
 }
 variable "domain_name" {
-  default = "devops.local"
+  default = "vaanam.work.gd"
 }
