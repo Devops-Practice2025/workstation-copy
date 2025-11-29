@@ -4,7 +4,7 @@ resource "aws_instance" "tool" {
 
   subnet_id = var.subnet_id
   vpc_security_group_ids = [var.sg_id]
-  iam_instance_profile = aws_iam_instance_profile.ec2_instance_profile.name
+
   root_block_device {
     volume_size = 50
     volume_type = "gp3"      #increase volume to 50gb
@@ -17,32 +17,32 @@ resource "aws_instance" "tool" {
 } 
 
 
-resource "aws_iam_role" "ec2_role" {
-  name  = var.role
+# resource "aws_iam_role" "ec2_role" {
+#   name  = var.role
 
 
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [{
-      Effect = "Allow",
-      Principal = {
-        Service = "ec2.amazonaws.com"
-      },
-      Action = "sts:AssumeRole"
-    }]
-  })
+#   assume_role_policy = jsonencode({
+#     Version = "2012-10-17",
+#     Statement = [{
+#       Effect = "Allow",
+#       Principal = {
+#         Service = "ec2.amazonaws.com"
+#       },
+#       Action = "sts:AssumeRole"
+#     }]
+#   })
   
-}
-resource "aws_iam_role_policy_attachment" "policy-attach" {
-  count = length(var.policy_name)
-  role       = aws_iam_role.ec2_role.name
-  policy_arn = "arn:aws:iam::aws:policy/${var.policy_name[count.index]}"
-}
+# }
+# resource "aws_iam_role_policy_attachment" "policy-attach" {
+#   count = length(var.policy_name)
+#   role       = aws_iam_role.ec2_role.name
+#   policy_arn = "arn:aws:iam::aws:policy/${var.policy_name[count.index]}"
+# }
 
-resource "aws_iam_instance_profile" "ec2_instance_profile" {
-  name = var.profile
-  role = aws_iam_role.ec2_role.name
-}
+# resource "aws_iam_instance_profile" "ec2_instance_profile" {
+#   name = var.profile
+#   role = aws_iam_role.ec2_role.name
+# }
 
 
 resource "aws_route53_record" "record-public" {
@@ -62,58 +62,58 @@ resource "aws_route53_record" "record-private" {
 }
 
 
-resource "null_resource" "run_ansible_playbook" {
-  count = var.name == "workstation" ? 1:0
-  depends_on = [
-    aws_instance.tool,
-    aws_iam_role_policy_attachment.policy-attach,
-     # Replace with your actual resource name
-  ]
+# resource "null_resource" "run_ansible_playbook" {
+#   count = var.name == "workstation" ? 1:0
+#   depends_on = [
+#     aws_instance.tool
 
-  provisioner "remote-exec" {
-    inline = [
-      "echo Hello from Terraform!",
-      "sudo dnf install ansible -y",
-      "git clone https://github.com/Devops-Practice2025/workstation-copy.git",
-      "cd ~/workstation-copy/ansible",
-      "ansible-playbook -i localhost, -e ansible_user=ec2-user -e ansible_password=DevOps321 -e role_name=workstation main.yml "
-    ]
+#      # Replace with your actual resource name
+#   ]
 
-    connection {
-      type     = "ssh"
-      user     = "ec2-user"               # or "ubuntu"
-      password = "DevOps321"          # ⚠️ Not secure
-      host     = aws_instance.tool.public_ip
-    }
-  }
+#   provisioner "remote-exec" {
+#     inline = [
+#       "echo Hello from Terraform!",
+#       "sudo dnf install ansible -y",
+#       "git clone https://github.com/Devops-Practice2025/workstation-copy.git",
+#       "cd ~/workstation-copy/ansible",
+#       "ansible-playbook -i localhost, -e ansible_user=ec2-user -e ansible_password=DevOps321 -e role_name=workstation main.yml "
+#     ]
 
-
-  }
-
-  resource "null_resource" "run_vault_playbook" {
-  count = var.name == "vault" ? 1:0
-  depends_on = [
-    aws_instance.tool,
-    aws_iam_role_policy_attachment.policy-attach,
-     # Replace with your actual resource name
-  ]
-
-  provisioner "remote-exec" {
-    inline = [
-      "echo Hello from ansible vault!",
-      "sudo dnf install ansible -y",
-      "git clone https://github.com/Devops-Practice2025/workstation-copy.git",
-      "cd ~/workstation-copy/ansible",
-      "ansible-playbook -i localhost, -e ansible_user=ec2-user -e ansible_password=DevOps321 -e role_name=vault main.yml -v"
-    ]
-
-    connection {
-      type     = "ssh"
-      user     = "ec2-user"               # or "ubuntu"
-      password = "DevOps321"          # ⚠️ Not secure
-      host     = aws_instance.tool.public_ip
-    }
-  }
+#     connection {
+#       type     = "ssh"
+#       user     = "ec2-user"               # or "ubuntu"
+#       password = "DevOps321"          # ⚠️ Not secure
+#       host     = aws_instance.tool.public_ip
+#     }
+#   }
 
 
-  }
+#   }
+
+#   resource "null_resource" "run_vault_playbook" {
+#   count = var.name == "vault" ? 1:0
+#   depends_on = [
+#     aws_instance.tool,
+#     aws_iam_role_policy_attachment.policy-attach,
+#      # Replace with your actual resource name
+#   ]
+
+#   provisioner "remote-exec" {
+#     inline = [
+#       "echo Hello from ansible vault!",
+#       "sudo dnf install ansible -y",
+#       "git clone https://github.com/Devops-Practice2025/workstation-copy.git",
+#       "cd ~/workstation-copy/ansible",
+#       "ansible-playbook -i localhost, -e ansible_user=ec2-user -e ansible_password=DevOps321 -e role_name=vault main.yml -v"
+#     ]
+
+#     connection {
+#       type     = "ssh"
+#       user     = "ec2-user"               # or "ubuntu"
+#       password = "DevOps321"          # ⚠️ Not secure
+#       host     = aws_instance.tool.public_ip
+#     }
+#   }
+
+
+#   }

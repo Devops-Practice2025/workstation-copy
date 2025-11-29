@@ -14,11 +14,9 @@ module "workstation" {
   instance_type = each.value["instance_type"]
   subnet_id = module.vpc.subnet_id
   sg_id = module.vpc.sg_id
-  policy_name = each.value["policy_name"]
-  domain_name = var.domain_name
-  role = each.value["role"]
-  profile = each.value["profile"]
+   domain_name = var.domain_name
   zone_id = module.route53.zone_id
+  
 }
 
 module "route53" {
