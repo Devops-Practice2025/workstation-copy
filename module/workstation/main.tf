@@ -32,16 +32,11 @@ resource "aws_iam_role" "ec2_role" {
     }]
   })
   
-lifecycle {
-    prevent_destroy = false
-    ignore_changes  = [name]
-  }
-
 }
 resource "aws_iam_role_policy_attachment" "policy-attach" {
-  count      = length(var.policy_name)
+  
   role       = aws_iam_role.ec2_role.name
-  policy_arn = "arn:aws:iam::aws:policy/${var.policy_name[count.index]}"
+  policy_arn = "arn:aws:iam::aws:policy/${var.policy_name}"
 }
 
 resource "aws_iam_instance_profile" "ec2_instance_profile" {
