@@ -1,7 +1,7 @@
 variable "tools" {
   default = {
     workstation = {
-      instance_type = "t2.large"
+      instance_type = "t2.medium"
 
           }
           vault={
@@ -10,6 +10,11 @@ variable "tools" {
           grunner={
             instance_type = "t3.medium"
           }
+
+          minikube={
+            instance_type = "t3.medium"
+          }
+
 
   }
 }
