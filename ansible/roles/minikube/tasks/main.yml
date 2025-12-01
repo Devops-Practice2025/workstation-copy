@@ -1,0 +1,21 @@
+- name: Setup Prompt
+  ansible.builtin.shell: set-prompt minikube
+
+- name: Lvextend lvm size
+  ansible.builtin.shell : |
+    growpart /dev/xvda 4
+    lvextend -L 20G /dev/RootVG/homeVol
+    xfs_growfs /home
+
+- name: Install Minikube
+  ansible.builtin.shell: dnf install https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm docker -y
+
+- name: Download kubectl
+  ansible.builtin.get_url:
+    url: https://dl.k8s.io/release/v1.30.3/bin/linux/amd64/kubectl
+    dest: /bin/kubectl
+    mode: '0755'
+
+- name: Start Minikube
+  ansible.builtin.shell: minikube start --force
+
