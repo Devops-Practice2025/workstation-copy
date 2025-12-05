@@ -1,8 +1,8 @@
-- name : dnf update
-  dnf:
-    name: '*'
-    state: latest
-    update_cache: yes
+# - name : dnf update
+#   dnf:
+#     name: '*'
+#     state: latest
+#     update_cache: yes
 
 - name: Install required packages
   dnf:
