@@ -11,6 +11,7 @@ resource "aws_instance" "tool" {
     delete_on_termination = true
 
   }
+
   tags = {
     Name = var.name
   }

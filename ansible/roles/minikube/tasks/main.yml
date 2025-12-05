@@ -1,11 +1,11 @@
 - name: Setup Prompt
   ansible.builtin.shell: set-prompt minikube
 
-- name: Lvextend lvm size
-  ansible.builtin.shell : |
-    growpart /dev/xvda 4
-    lvextend -L 20G /dev/RootVG/homeVol
-    xfs_growfs /home
+# - name: Lvextend lvm size
+#   ansible.builtin.shell : |
+#     growpart /dev/xvda 4
+#     lvextend -L 20G /dev/RootVG/homeVol
+#     xfs_growfs /home
 
 - name: Install Minikube
   ansible.builtin.shell: dnf install https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm docker -y
